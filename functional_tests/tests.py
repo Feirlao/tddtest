@@ -1,9 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from django.test import LiveServerTestCase
 import time
 import unittest
 
-class NewVistirorTest(unittest.TestCase):
+class NewVistirorTest(LiveServerTestCase):
 
     def setUp(self):
          self.browser=webdriver.Firefox()
@@ -18,7 +19,7 @@ class NewVistirorTest(unittest.TestCase):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
 
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
@@ -41,8 +42,5 @@ class NewVistirorTest(unittest.TestCase):
 
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
-
-if __name__=='__main__':
-    unittest.main(warnings='ignore')
 
 
